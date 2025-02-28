@@ -44,20 +44,7 @@ const HomeScreen = () => {
             </View>
 
         </View>
-        // <SafeAreaView style={styles.container}>
-        //     <HeaderScreen title="MUVIPE" />
-
-        //     <View style={{flex:1}}>
-        //         <MaterialTopTabsScreen />
-        //     </View>
-
-        //       <View  > 
-        //         <CarouselsliderScreen />
-        //     </View>
-        //     <View style={{flex:1}}>
-        //         <MovieList/>
-        //     </View>
-        // </SafeAreaView>
+       
     );
 };
 
