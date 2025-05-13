@@ -18,6 +18,9 @@ import Feather from "react-native-vector-icons/Feather";
 // import MovieDetailsScreen from '../view/MovieDetails';
 import MovieDetails from '../view/MovieDetails';
 import MovieList from '../commponents/movies';
+import Login from '../view/Login';
+import Signup from '../view/Signup';
+import Subscription from '../commponents/Subscription';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -83,130 +86,119 @@ const StackNavigation = () => {
             headerTitleAlign: "center",
 
         }}>
-
-            <Stack.Screen name="Bottom" component={BottomNavigation} />
-            <Stack.Screen name='movielist' component={MovieList}/>
-            <Stack.Screen name="MovieDetails" component={MovieDetails} />
+                   <Stack.Screen name='login' component={Login}/>
+                   <Stack.Screen name='signup' component={Signup}/>
+                   {/* <Stack.Screen name='signup' componen={Signup}/> */}
+                  <Stack.Screen name="Bottom" component={BottomNavigation} />
+                  <Stack.Screen name='movielist' component={MovieList}/>
+                 <Stack.Screen name="MovieDetails" component={MovieDetails} />
+                 <Stack.Screen name='Subscription' component={Subscription}/>
+        
 
         </Stack.Navigator>
     );
 };
 
-// Drawer Navigation
+
+
+
 const DrawerScreen = () => {
     return (
         <NavigationContainer>
             <Drawer.Navigator
-                drawerContent={(props) => {
-                    return (
-                        <SafeAreaView style={styles.drawerContainer}>
-                            {/* User Profile Section */}
-                            <View style={styles.profileSection}>
-                                <Image source={require('../assets/images/person.png')} style={styles.avatar} />
+                drawerContent={(props) => (
+                    <DrawerContentScrollView
+                        {...props}
+                        contentContainerStyle={styles.drawerGradient}
+                    >
+                        {/* User Profile Section */}
+                        <View style={styles.profileSection}>
+                          <Image source={require('../assets/images/singam.jpg')} style={styles.avatar} />
+                            <TouchableOpacity style={styles.editIcon}>
+                                <Feather name="edit" size={18} color="white" />
+                            </TouchableOpacity>
+                        </View>
 
-                                {/* Edit Icon Positioned in the Center of Avatar */}
-                                <TouchableOpacity style={styles.editIcon}>
-                                    <Feather name="edit" size={18} color="white" />
-                                </TouchableOpacity>
-                            </View>
-
-                            {/* Drawer Items */}
+                        {/* Menu Items */}
+                        <View style={styles.menuSection}>
                             <DrawerItemList {...props} />
-                        </SafeAreaView>
+                        </View>
 
-                    );
+                        {/* Divider */}
+                        <View style={styles.divider} />
 
-                }}
+                        {/* Extra Menu Items */}
+                        {[
+                            { label: 'Terms & Conditions', icon: 'shield' },
+                            { label: 'Privacy Policy', icon: 'shield' },
+                            { label: 'Refund Policy', icon: 'lock' },
+                            { label: 'Contact Us', icon: 'person' },
+                        ].map((item, idx) => (
+                            <DrawerItem
+                                key={idx}
+                                label={item.label}
+                                labelStyle={styles.drawerLabel}
+                                icon={({ color }) => <Octicons name={item.icon} size={20} color="white" />}
+                                onPress={() => {}}
+                            />
+                        ))}
+
+                        {/* Social Icons */}
+                        <View style={styles.socialIcons}>
+                            <Entypo name="facebook" size={30} color="#fff" />
+                            <Entypo name="youtube" size={24} color="white" />
+                            <Entypo name="instagram" size={24} color="white" />
+                            <Entypo name="twitter" size={24} color="white" />
+                        </View>
+
+                        {/* Footer */}
+                        {/* <Text style={styles.footerText}>
+                            Copyrights © 2024 <Text style={styles.linkText}>MoviePay.com</Text>
+                            {"\n"}All Rights Reserved
+                        </Text> */}
+                    </DrawerContentScrollView>
+                )}
                 screenOptions={{
-
                     drawerStyle: {
-                        backgroundColor: "white",
-                        width: 250
-                    },
-                    headerStyle: {
-                        backgroundColor: "white",
-
+                        backgroundColor: '#4B2C91', // fallback
+                        width: 260,
                     },
                     headerShown: false,
-                    headerTintColor: "black",
-
-                    drawerLabelStyle: {
-                        fontSize: 15,
-                        color: "black",
-                        marginLeft: -10,
-                    },
-
-                }} >
-
+                    drawerLabelStyle: styles.drawerLabel,
+                }}
+            >
                 <Drawer.Screen
                     name="Home"
-                    options={{
-                        drawerLabel: "Home",
-                        title: "Home",
-                        headerShadowVisible: false,
-                        drawerIcon: () => (
-                            <Entypo name="home" color="black" size={30} />
-                        ),
-                    }}
                     component={StackNavigation}
+                    options={{
+                        drawerIcon: () => <Entypo name="home" size={30} color="white" />,
+                    }}
                 />
                 <Drawer.Screen
-                    name="Search"
-                    options={{
-                        drawerLabel: "Search",
-                        title: "Search",
-                        headerShadowVisible: false,
-                        drawerIcon: () => (
-                            <EvilIcons name="search" color="black" size={30} />
-                        ),
-                    }}
+                    name="Movies"
                     component={SearchScreen}
+                    options={{
+                        drawerIcon: () => <EvilIcons name="search" size={30} color="white" />,
+                    }}
+                />
+                <Drawer.Screen
+                    name="My Tickets"
+                    component={TicketsScreen}
+                    options={{
+                        drawerIcon: () => <MaterialIcons name="airplane-ticket" size={30} color="white" />,
+                    }}
                 />
                 <Drawer.Screen
                     name="Wallet"
-                    options={{
-                        drawerLabel: "Wallet",
-                        title: "Wallet",
-                        headerShadowVisible: false,
-                        drawerIcon: () => (
-                            <Entypo name="wallet" color="black" size={30} />
-                        ),
-                    }}
                     component={WalletScreen}
-                />
-                <Drawer.Screen
-                    name="Tickets"
                     options={{
-                        drawerLabel: "Tickets",
-                        title: "Tickets",
-                        headerShadowVisible: false,
-                        drawerIcon: () => (
-                            <MaterialIcons name="airplane-ticket" color="black" size={30} />
-                        ),
+                        drawerIcon: () => <Entypo name="wallet" size={30} color="white" />,
                     }}
-                    component={TicketsScreen}
-                />
-                <Drawer.Screen
-                    name="Profile"
-                    options={{
-                        drawerLabel: "Profile",
-                        title: "Profile",
-                        headerShadowVisible: false,
-                        drawerIcon: () => (
-                            <Octicons name="feed-person" color="black" size={30} />
-                        ),
-                    }}
-                    component={ProfileScreen}
                 />
             </Drawer.Navigator>
         </NavigationContainer>
     );
 };
-
-
-
-
-
 
 
 // Root Component
@@ -217,35 +209,71 @@ const Route = () => {
 export default Route;
 
 const styles = StyleSheet.create({
-    drawerContainer: {
+    drawerGradient: {
         flex: 1,
+        paddingTop: 0,
+        backgroundColor: '#003366', // Deep purple
     },
     profileSection: {
-        alignItems: "center",
-        justifyContent: "center",
-        paddingVertical: 20,
-        backgroundColor: "#003366",
-        position: "relative",
+        alignItems: 'center',
+        paddingVertical: 30,
+        backgroundColor: '#003366',
+        position: 'relative',
     },
     avatar: {
-        width: 90,
-        height: 90,
-        borderRadius: 40, // Makes it a circle
+        width: 110,
+        height: 110,
+        borderRadius: 50,
         borderWidth: 2,
-        borderColor: "white",
+        borderColor: '#fff',
     },
     editIcon: {
-        position: "absolute",
-        marginLeft: 70,
-
+       position: "absolute",
+        marginLeft: 100,
+       marginTop:80,
         backgroundColor: "#003366",
-        width: 28,
-        height: 28,
+        width: 38,
+        height: 38,
         borderRadius: 14,
         alignItems: "center",
         justifyContent: "center",
         borderWidth: 1,
         borderColor: "white",
+       
+
+
+
+
+       
+    },
+    menuSection: {
+        marginTop: 10,
+    },
+    drawerLabel: {
+        color: 'white',
+        fontSize: 14,
+        marginLeft: -10,
+    },
+    divider: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#ffffff33',
+        marginVertical: 10,
+        marginHorizontal: 10,
+    },
+    socialIcons: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        paddingVertical: 15,
+        marginHorizontal: 20,
+    },
+    footerText: {
+        color: '#ccc',
+        fontSize: 12,
+        textAlign: 'center',
+        paddingBottom: 15,
+    },
+    linkText: {
+        color: '#a0e9ff',
     },
 });
 

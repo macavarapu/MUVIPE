@@ -1,135 +1,37 @@
 
-// import React, { useState } from "react";
-// import {
-//   View,
-//   Text,
-//   StyleSheet,
-//   TouchableOpacity,
-//   Share,
-//   Image,
-// } from "react-native";
+// import React from "react";
+// import { View, Text, Image, StyleSheet ,TouchableOpacity} from "react-native";
 // import Video from "react-native-video";
-// import { useNavigation } from "@react-navigation/native";
-// import Ionicons from "react-native-vector-icons/Ionicons";
-// import Orientation from "react-native-orientation-locker";
 
 // const MovieDetails = ({ route }) => {
-//   const { movie } = route.params;
-//   const navigation = useNavigation();
-//   const [isFullScreen, setIsFullScreen] = useState(false);
-
-//   // Toggle Fullscreen
-//   const toggleFullScreen = () => {
-//     if (isFullScreen) {
-//       Orientation.unlockAllOrientations();
-//     } else {
-//       Orientation.lockToLandscape();
-//     }
-//     setIsFullScreen(!isFullScreen);
-//   };
-
-//   // Share Movie
-//   const shareMovie = async () => {
-//     try {
-//       await Share.share({
-//         message: `Check out this movie: ${movie.title} - ${movie.description}`,
-//       });
-//     } catch (error) {
-//       console.error("Error sharing movie:", error);
-//     }
-//   };
+//   const { movie } = route.params || {}; // Avoid errors if movie is undefined
 
 //   return (
-//     <View style={styles.container}>
-//       {/* Back Button */}
-//       <TouchableOpacity
-//         style={styles.backButton}
-//         onPress={() => navigation.goBack()}
-//       >
-//         <Ionicons name="arrow-back" size={30} color="white" />
-//       </TouchableOpacity>
-
-//       {/* Video Player */}
-//       <View style={styles.videoContainer}>
-//         <Video
-//           source={{
-//             uri: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
-//           }}
-//           style={styles.video}
-//           controls={true}
-//           resizeMode="contain"
-//           fullscreen={isFullScreen}
-//           onFullscreenPlayerWillDismiss={() => setIsFullScreen(false)}
-//         />
-//         {/* Fullscreen Button */}
-//         <TouchableOpacity style={styles.fullScreenButton} onPress={toggleFullScreen}>
-//           <Ionicons name="expand" size={30} color="white" />
-//         </TouchableOpacity>
-//       </View>
-
-//       {/* Movie Title */}
-//       <Text style={styles.title}>{movie.title}</Text>
-
-//       {/* Movie Actions */}
-//       <View style={styles.actions}>
-//         <TouchableOpacity onPress={() => console.log("Add to Watchlist")}>
-//           <Ionicons name="bookmark-outline" size={30} color="white" />
-//         </TouchableOpacity>
-//         <TouchableOpacity onPress={shareMovie}>
-//           <Ionicons name="share-social-outline" size={30} color="white" />
-//         </TouchableOpacity>
-//         <TouchableOpacity onPress={() => console.log("Download Movie")}>
-//           <Ionicons name="download-outline" size={30} color="white" />
-//         </TouchableOpacity>
-//         <TouchableOpacity onPress={() => console.log("Rate Movie")}>
-//           <Ionicons name="star-outline" size={30} color="white" />
-//         </TouchableOpacity>
-//       </View>
-
-//       {/* Movie Description */}
-//       <Text style={styles.description}>{movie.description}</Text>
-
-//       {/* Watch Now Button */}
-//       <TouchableOpacity style={styles.watchNowButton}>
-//         <Text style={styles.watchNowText}>Watch Now</Text>
-//       </TouchableOpacity>
+//     <View style={styles.vcontainer}>
+//       <Video
+//         source={{ uri: "https://www.w3schools.com/html/mov_bbb.mp4" }} // Replace with actual video URL
+//         style={styles.video}
+//         controls
+//         resizeMode="contain"
+//       />
+//       {movie?.title && <Text style={styles.title}>{movie.title}</Text>}
+     
 //     </View>
 //   );
 // };
 
-// // Styles
 // const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#003366",
-//     paddingTop: 40,
-//     paddingHorizontal: 20,
-//   },
-//   backButton: {
-//     position: "absolute",
-//     top: 30,
-//     left: 20,
-//     zIndex: 10,
-//     backgroundColor: "rgba(0, 0, 0, 0.5)",
-//     padding: 10,
-//     borderRadius: 50,
-//   },
-//   videoContainer: {
+//   vcontainer: {
 //     flex: 1,
 //     alignItems: "center",
 //     justifyContent: "center",
+//     backgroundColor: "#003366",
+//     paddingHorizontal: 10,
 //   },
 //   video: {
-//     width: "100%",
-//     height: 210,
-//   },
-//   fullScreenButton: {
-//     position: "absolute",
-//     bottom: 10,
-//     right: 20,
-//     backgroundColor: "rgba(0, 0, 0, 0.5)",
-//     padding: 10,
-//     borderRadius: 50,
+//     width: "90%",
+//     height: 250,
+//     alignSelf: "center",
 //   },
 //   title: {
 //     fontSize: 24,
@@ -137,29 +39,6 @@
 //     color: "white",
 //     textAlign: "center",
 //     marginTop: 10,
-//   },
-//   actions: {
-//     flexDirection: "row",
-//     justifyContent: "space-around",
-//     marginVertical: 10,
-//   },
-//   description: {
-//     color: "white",
-//     fontSize: 16,
-//     textAlign: "center",
-//     padding: 10,
-//   },
-//   watchNowButton: {
-//     backgroundColor: "#ff6600",
-//     paddingVertical: 10,
-//     marginHorizontal: 50,
-//     borderRadius: 10,
-//     alignItems: "center",
-//   },
-//   watchNowText: {
-//     fontSize: 18,
-//     color: "white",
-//     fontWeight: "bold",
 //   },
 // });
 
@@ -170,139 +49,187 @@
 
 
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import Video from "react-native-video";
-import { useNavigation } from "@react-navigation/native"; // Import navigation
-import Ionicons from "react-native-vector-icons/Ionicons"; // Import Icons
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  FlatList,
+} from "react-native";
+ import Video from "react-native-video";
+ import Icon from "react-native-vector-icons/Ionicons";
+ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
-const MovieDetails = ({ route }) => {
-  const { movie } = route.params; // Get movie data from navigation
-  const navigation = useNavigation(); // Access navigation
+const MovieDetails = ({route,navigation}) => {
+  const { movie } = route.params || {};
+
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      {/* Video or Image Banner */}
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <MaterialIcons name="keyboard-arrow-left" size={24} color="#fff" />
+      </TouchableOpacity>
+      <Video
+        source={{ uri: "https://www.w3schools.com/html/mov_bbb.mp4" }} // Replace with actual video URL
+        style={styles.banner}
+        controls
+        resizeMode="contain"
+      />
+
   
 
-      {/* Back Button */}
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Ionicons name="arrow-back" size={30} color="white" />
-      </TouchableOpacity>
-
-      {/* Video Player */}
-      <View style={styles.videoContainer}>
-        <Video
-          source={{ uri: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4" }} // Replace with your video URL
-          style={styles.video}
-          controls={true} // Enables play, pause, seek, fullscreen
-          resizeMode="contain"
-        />
-        <Text style={styles.title}>{movie.title}</Text>
+      {/* Movie Info */}
+      <View style={styles.movieInfo}>
+        <Text style={styles.badge}>Premium</Text>
+        <Text style={styles.badge}>U/A 16+</Text>
       </View>
-    </View>
+      {movie?.title && <Text style={styles.title}>{movie.title}</Text>}
+      {/* <Text style={styles.title}>BRAHMA-ANANDAM</Text> */}
+      <Text style={styles.subtitle}>2025 • 2hr 28min • Drama</Text>
+      <Text style={styles.genre}>Humorous</Text>
+
+      {/* Movie Description */}
+      <Text style={styles.description}>
+      Devara: Part 1" is a 2024 Indian Telugu-language action drama film starring Jr. NTR, Saif Ali Khan, and Janhvi Kapoor, directed by Koratala Siva, set against a coastal backdrop, and follows Devara, a chieftain, who feuds with Bhaira over arms smuggling
+      </Text>
+
+      {/* Buttons */}
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.trailerButton}>
+          <Text style={styles.buttonText}>Play Trailer</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.subscribeButton}   onPress={() => navigation.navigate("Subscription")}>
+          <Text style={styles.subscribeText}>Subscribe</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Sign In */}
+      <Text style={styles.signInText}>
+        Already have an account? <Text style={styles.signInLink}>Sign In</Text>
+      </Text>
+
+    
+      
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#003366",
-    paddingTop: 40,
-    paddingHorizontal: 20,
+    backgroundColor: "#121212",
   },
   backButton: {
     position: "absolute",
-   
-    top: 30,
-    left: 20,
-    zIndex: 10, // Ensure it stays above other elements
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
+    top: 20, // Adjust for status bar height
+    left: 16,
+    zIndex: 10,
+    backgroundColor: "rgba(0,0,0,0.5)", // Optional background
     padding: 10,
-    borderRadius: 50,
+    borderRadius: 20,
   },
-  videoContainer: {
-    flex: 1,
-    // alignItems: "center",
-    // justifyContent: "center",
-  },
-  video: {
+  banner: {
     width: "100%",
-    height: 210,
+    height: 250,
+    resizeMode: "cover",
+  },
+  movieInfo: {
+    flexDirection: "row",
+    marginTop: 10,
+    marginLeft: 16,
+  },
+  badge: {
+    backgroundColor: "#FF9800",
+    color: "#fff",
+    padding: 5,
+    borderRadius: 5,
+    fontSize: 12,
+    marginRight: 8,
   },
   title: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "bold",
-    color: "white",
-    textAlign: "center",
+    color: "#fff",
+    marginLeft: 16,
     marginTop: 10,
+  },
+  subtitle: {
+    fontSize: 14,
+    color: "#aaa",
+    marginLeft: 16,
+  },
+  genre: {
+    fontSize: 16,
+    color: "#FF9800",
+    marginLeft: 16,
+    marginBottom: 10,
+  },
+  description: {
+    fontSize: 14,
+    color: "#ccc",
+    marginLeft: 16,
+    marginRight: 16,
+    marginBottom: 10,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    marginVertical: 10,
+  },
+  trailerButton: {
+    backgroundColor: "#333",
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 8,
+  },
+  subscribeButton: {
+    backgroundColor: "#FF5722",
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 8,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+  },
+  subscribeText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  signInText: {
+    color: "#aaa",
+    textAlign: "center",
+    marginVertical: 10,
+  },
+  signInLink: {
+    color: "#FF9800",
+    fontWeight: "bold",
+  },
+  sectionTitle: {
+    fontSize: 18,
+    color: "#fff",
+    marginLeft: 16,
+    marginTop: 20,
+    fontWeight: "bold",
+  },
+  castContainer: {
+    alignItems: "center",
+    margin: 10,
+  },
+  castImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+  },
+  castName: {
+    color: "#fff",
+    fontSize: 14,
+    marginTop: 5,
   },
 });
 
 export default MovieDetails;
-
-
-
-
-
-
-
-// import React from "react";
-// import { View, Text, Image, StyleSheet } from "react-native";
-// import Video from "react-native-video";
-
-// const MovieDetails = ({ route }) => {
-//   const { movie } = route.params; // Get movie data from navigation
-
-//   return (
-
-//     <View style={styles.vcontainer}>
-//     <Video
-//       source={{ uri: "https://www.w3schools.com/html/mov_bbb.mp4" }} // Replace with your video URL
-//       style={styles.video}
-//       controls={true} // Enables play, pause, seek, fullscreen
-//       resizeMode="contain"
-
-//     />
-//     <Text style={styles.title}>{movie.title}</Text>
-//   </View>
-//     // <View style={styles.container}>
-//     //   <Image source={movie.image} style={styles.image} />
-//     //   <Text style={styles.title}>{movie.title}</Text>
-      
-//     // </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#003366",
-//     alignItems: "center",
-//     justifyContent: "center",
-//     padding: 20,
-//   },
-//   image: {
-//     width: 300,
-//     height: 400,
-//     borderRadius: 10,
-//     resizeMode: "cover",
-//     marginBottom: 20,
-//   },
-//   title: {
-//     fontSize: 24,
-//     fontWeight: "bold",
-//     color: "white",
-//     textAlign: "center",
-//   },
-//   vcontainer: {
-//     flex: 1,
-//     //justifyContent: "center",
-//     //alignItems: "center",
-//     backgroundColor: "#003366",
-//   },
-//   video: {
-//     width: "90%",
-//     height: 250,
-//   },
-// });
-
-// export default MovieDetails;
